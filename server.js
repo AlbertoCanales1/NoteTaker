@@ -4,15 +4,27 @@ const fs = require("fs");
 const app = express();
 
 
-const PORT = process.env.PORT || 8080;
-
+const PORT = process.env.PORT || 3001;
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-require('./routes/apiroutes')(app);
-require('./routes/htmlroutes')(app);
 
 app.listen(PORT, () => {
-    console.log(`App listening on PORT: ${PORT}`);
-  });
-  
+  console.log(`App listening on PORT: ${PORT}`);
+});
+
+app.get("/api/notes", function (req, res) {
+  res.json(notes)
+  console.log(notes)
+})
+
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(_dirname, './public/notes.html'))
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(_dirname, './public/index.html'))
+});
+
+
