@@ -4,6 +4,7 @@ const fs = require("fs");
 const app = express();
 
 
+
 let notes = JSON.parse(fs.readFileSync(path.join(__dirname, "./db/db.json"), "utf8"))
 
 const PORT = process.env.PORT || 3001;
@@ -17,13 +18,7 @@ app.listen(PORT, () => {
 });
 
 
-app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/assets/notes.html"))
-});
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/assets/index.html"))
-});
 
 app.get("/api/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "./db/db.json"))
@@ -32,6 +27,12 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "./db/db.json"))
 })
+
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/assets/notes.html"))
+});
+
+
 
 app.post("/api/notes", (req, res) => {
   let newNote = req.body;
@@ -50,3 +51,6 @@ app.post("/api/notes", (req, res) => {
   return res.status(200).send("Note Added");
 })
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/assets/index.html"))
+});
