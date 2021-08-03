@@ -18,20 +18,19 @@ app.listen(PORT, () => {
 });
 
 
-
-
 app.get("/api/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "./db/db.json"))
 });
 
-app.post("/api/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "./db/db.json"))
-})
+
 
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, "/public/assets/notes.html"))
 });
 
+app.delete("/api/notes", (req, res) => {
+  res.destroy(path.join(__dirname, '/public/assets/notes.html'))
+})
 
 
 app.post("/api/notes", (req, res) => {
@@ -51,6 +50,15 @@ app.post("/api/notes", (req, res) => {
   return res.status(200).send("Note Added");
 })
 
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "/public/assets/index.html"))
 });
+
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname, "./db/db.json"))
+})
+
+app.delete('*', (req, res) => {
+  res.destroy(path.join(__dirname), "./db/db.json")
+})
